@@ -510,6 +510,13 @@ impl Core {
         self.mount_selected_disk();
     }
 
+    fn mount_content_disk(&mut self, image: DiskImage) {
+        self.mount_disk(image);
+        // A standalone disk is core content, so let the console see DSK1 during
+        // its initial reset. Disk Control inserts remain live and do not reset.
+        self.machine.reset();
+    }
+
     fn mount_selected_disk(&mut self) {
         if self.disk_ejected {
             return;
@@ -1353,7 +1360,7 @@ unsafe fn new_core(info: Option<&RetroGameInfo>) -> Option<Core> {
                 return None;
             }
             if is_disk(path.as_deref(), &bytes) {
-                core.mount_disk(DiskImage {
+                core.mount_content_disk(DiskImage {
                     key: path.clone(),
                     label: disk_label(path.as_deref(), 0),
                     bytes,
@@ -1853,5 +1860,25 @@ mod tests {
         assert!(is_disk(Some("disk.DSK"), b"anything"));
         assert!(!is_disk(Some("game.ctg"), b"not-a-cartridge"));
         assert!(is_disk(None, b"not-a-cartridge"));
+    }
+
+    #[test]
+    fn loading_disk_content_mounts_dsk1_for_core_lifetime() {
+        let bytes = vec![0; 4096];
+        let path = CString::new("content.dsk").unwrap();
+        let info = RetroGameInfo {
+            path: path.as_ptr(),
+            data: bytes.as_ptr().cast(),
+            size: bytes.len(),
+            meta: ptr::null(),
+        };
+        let core = unsafe { new_core(Some(&info)) }.expect("disk content should load");
+
+        assert_eq!(core.disk_images.len(), 1);
+        assert!(!core.disk_ejected);
+        assert_eq!(
+            core.machine.bus().disk.drive_image(0),
+            Some(bytes.as_slice())
+        );
     }
 }

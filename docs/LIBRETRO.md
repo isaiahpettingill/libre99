@@ -47,10 +47,13 @@ you use for game content, then load them through the frontend's normal content
 browser. The core copies frontend-provided buffers, so it does not depend on
 those buffers remaining valid after `retro_load_game` returns.
 
-A `.dsk` is a disk image, not a self-launching program. Loading one by itself
- mounts it as DSK1 and boots the bare console; the console has no generic disk
- browser or automatic file launcher. Disk software normally needs a cartridge or
- console firmware program to read the directory and load files.
+A `.dsk` loaded directly as core content is copied into memory and inserted in
+DSK1 for the duration of that core session. Unloading the content removes the
+in-memory disk; the source file is never modified. A `.dsk` is a disk image, not
+a self-launching program. Loading one by itself boots the bare console; the
+console has no generic disk browser or automatic file launcher. Disk software
+normally needs a cartridge or console firmware program to read the directory
+and load files.
 
 For cartridge-based disk software in RetroArch:
 

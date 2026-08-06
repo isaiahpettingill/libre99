@@ -168,6 +168,12 @@ RUN
 Replace `PROGRAM` with the filename on the disk. Cartridge software may use its
 own menu or commands instead.
 
+When a libretro frontend loads a `.dsk` as the core content, Libre99 copies it
+into memory and keeps it inserted in DSK1 until that content is unloaded. The
+source file is not modified. This makes the disk available to the firmware or
+cartridge for the full gameplay session; it does not make the disk image itself
+an executable program.
+
 ## The keyboard
 
 The TI-99/4A reaches its symbols and edit functions through `SHIFT` and `FCTN`
