@@ -4,7 +4,7 @@ Where the project stands, at a glance. Kept current: update this file in the
 same commit as any change that lands or retires a milestone-sized piece of
 work (see the documentation policy in [DEVELOPMENT.md](DEVELOPMENT.md)).
 
-_Last updated: 2026-07-07 — **0.1.0 is ready to tag**: the workspace is at
+_Last updated: 2026-08-06 — **0.1.0 is ready to tag**: the libretro core adapter is now implemented; the workspace is at
 version **0.1.0** (one number for the emulator, the firmware markers, and TI
 PYTHON's banner; [CHANGELOG](../CHANGELOG.md)), the `Esc`/`F1` help was
 revamped with a first-run **`PRESS ESC FOR HELP`** banner and a `--version`
@@ -35,6 +35,7 @@ clean-room firmware boots by default._
 | TI Disk Controller (FD1771, clean-room DSR by default, VIB-aware geometry) | ✅ complete |
 | SN76489 PSG + host audio | ✅ complete |
 | Desktop app (window, input, audio, overlays, file chooser, config, logging, save states) | ✅ complete, playable |
+| Libretro core (`libre99-libretro`: video, audio, keyboard/mouse/controllers, media, firmware overrides, disk control, save states) | ✅ implemented; build with `cargo build --release -p libre99-libretro` |
 | Media model: **zero embedded media** — `.ctg`/`.bin`/`.dsk` load at run time (CLI paths / `F9` system file chooser) | ✅ complete (2026-07-06) |
 | Disk persistence: host `.dsk` never written — live mount/eject, in-memory images survive eject/remount and save states, `F4` export/unload | ✅ complete (2026-07-07) |
 | Save states: resume state (auto-save/resume, `F6`/`F8`, `Shift`+`F5` fresh start) + snapshot files (`Shift`+`F6`/`F8`, native dialogs), atomic writes, portable format v3 | ✅ complete (2026-07-07) |
@@ -75,7 +76,7 @@ and [rom/README.md](../original-content/system-roms/rom/README.md).
 
 ## Health
 
-- `cargo test --workspace` green — **500+ tests** across the four crates
+- `cargo test --workspace` green — **500+ tests** across the five crates
   (CPU conformance, chip semantics, boot/cartridge/disk integration gates,
   firmware differential suites, the 137-cartridge sweep, save-state
   round-trips, frontend logic).
@@ -93,7 +94,7 @@ has landed** — what remains is the owner's ship sequence: the hands-on
 testing pass (plus the two pending gameplay eyeballs — Parsec's small-caps
 prompt, a Video Vegas play-through), `git tag v0.1.0`, and prebuilt
 Windows/macOS binaries on a GitHub Release. Post-0.1.0, the near-term
-**[next]** items are the macOS `.app` bundle, key/joystick remapping, the
+**[next]** items are the macOS `.app` bundle, desktop key/joystick remapping, the
 authentic lowercase keytab (then the alpha-lock host toggle). User-visible
 quirks and open issues are tracked in [KNOWN-ISSUES.md](KNOWN-ISSUES.md);
 firmware-rewrite limitations in

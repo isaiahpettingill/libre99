@@ -9,9 +9,10 @@ current state of the world is in [STATUS.md](STATUS.md).
 ## Build and test
 
 ```bash
-cargo test --workspace           # the whole suite (500+ tests, all four crates)
+cargo test --workspace           # the whole suite (500+ tests, all five crates)
 cargo clippy --workspace         # keep it clean — CI enforces -D warnings
-cargo run --release -p libre99-app  # run the emulator
+cargo run --release -p libre99-app       # run the desktop emulator
+cargo build --release -p libre99-libretro  # build the libretro cdylib
 ```
 
 Useful narrower runs:
@@ -20,6 +21,7 @@ Useful narrower runs:
 cargo test -p libre99-core          # the emulator core alone (pure std, no deps)
 cargo test -p libre99-gpl           # GPL toolchain + console-GROM gates + 137-cart sweep
 cargo test -p libre99-asm           # assembler + console-ROM differential gates
+cargo test -p libre99-libretro      # libretro adapter tests
 ```
 
 CI (`.github/workflows/ci.yml`) runs tests and clippy on Windows and macOS.
@@ -137,10 +139,13 @@ project-doc refactors.
 
 - The project's original work is licensed **Modified MIT + Commons Clause**
   ([LICENSE.md](../LICENSE.md)). Every Rust source file carries the full
-  license text as a `//` header; keep it verbatim on existing files and add it
-  to new ones. The firmware sources (`.asm`/`.gpl`) carry a short license
-  pointer in their headers. Never reintroduce "all rights reserved" wording —
-  it contradicts the grant.
+  license text as a `//` header; keep it verbatim on existing files and add one
+  to new ones. The separately contributed `crates/libre99-libretro` adapter is
+  the exception: it is MIT-licensed by Isaiah Pettingill and keeps Joel Odom's
+  core and firmware copyright/license separate. The firmware sources (`.asm`/
+  `.gpl`) carry a short license pointer in their headers. Never reintroduce
+  "all rights reserved" wording into Joel Odom's licensed files — it contradicts
+  the grant.
 - The clean-room firmware reproduces **interface data** (fonts, key tables,
   headers, dispatch layouts) byte-identically for interoperability, under a
   documented policy — see the provenance sections of

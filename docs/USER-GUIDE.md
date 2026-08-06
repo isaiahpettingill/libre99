@@ -14,6 +14,7 @@ Windows/Linux; every other `Ctrl` chord still reaches the TI's own CTRL key.)
 ## Contents
 
 - [Running it](#running-it)
+- [Libretro core](#libretro-core)
 - [Command-line options](#command-line-options)
 - [Console firmware: clean-room default vs. authentic TI](#console-firmware-clean-room-default-vs-authentic-ti)
 - [Choosing cartridges and disks](#choosing-cartridges-and-disks)
@@ -62,6 +63,22 @@ save a state.
 
 A double-clickable macOS `.app` bundle is planned
 ([roadmap](ROADMAP.md)); `cargo run` is the supported launcher today.
+
+## Libretro core
+
+This workspace also builds a separate MIT-licensed libretro core adapter. It
+runs in RetroArch and other libretro frontends, with controller and keyboard
+input, mouse-to-joystick input, audio, `.ctg`/`.bin`/`.dsk` content, disk swapping,
+custom firmware files in the frontend system directory, and save states.
+
+Build and install it with:
+
+```bash
+cargo build --release -p libre99-libretro
+```
+
+See [LIBRETRO.md](LIBRETRO.md) for the core file names, firmware folder layout,
+controller remapping options, and disk-control behavior.
 
 ## Command-line options
 

@@ -14,10 +14,13 @@
 #   crates/libre99-asm    the TMS9900 assembler + cartridge packager (`libre99asm`).
 #                      Pure `std`; depends only on libre99-core (for the shared
 #                      `.ctg` writer and round-trip/boot tests).
+#
+#   crates/libre99-libretro  the MIT-licensed libretro ABI adapter (`cdylib`).
+#                      Unsafe FFI stays here; the emulator core remains safe.
 
 [workspace]
 resolver = "2"
-members = ["crates/libre99-core", "crates/libre99-app", "crates/libre99-asm", "crates/libre99-gpl"]
+members = ["crates/libre99-core", "crates/libre99-app", "crates/libre99-asm", "crates/libre99-gpl", "crates/libre99-libretro"]
 
 [workspace.package]
 # The single source of truth for the project version. Everything that reports a

@@ -1,0 +1,16 @@
+[package]
+name = "libre99-libretro"
+version.workspace = true
+edition.workspace = true
+authors = ["Isaiah Pettingill"]
+license = "MIT"
+repository.workspace = true
+description = "MIT-licensed libretro core adapter for the Libre99 TI-99/4A emulator."
+build = "build.rs"
+
+[lib]
+name = "libre99_libretro"
+crate-type = ["cdylib", "staticlib"]
+
+[dependencies]
+libre99-core = { path = "../libre99-core" }

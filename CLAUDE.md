@@ -69,13 +69,16 @@ The desktop binary is named `libre99`.
 
 The project is licensed under the **Modified MIT License with Commons Clause**
 (source-available; the sell right is removed) — see `LICENSE.md`. Every Rust
-source file we author (all of `crates/**/*.rs` plus `docs/ti99book/code/bench`)
-carries the **full text of `LICENSE.md` as a commented (`//`) header** at the top
-of the file; the firmware/cartridge sources (`.asm`/`.gpl`) carry a short
-two-line license pointer instead. **Preserve those headers on every existing
-file, and add one to every new source file**, keeping them in sync with
-`LICENSE.md`. Do not reintroduce "all rights reserved" notices — they
-contradict the license grant.
+source file we author (all of `crates/**/*.rs` except the
+separately contributed `crates/libre99-libretro`, plus
+`docs/ti99book/code/bench`) carries the **full text of `LICENSE.md` as a
+commented (`//`) header** at the top of the file. The separately contributed
+libretro adapter is MIT-licensed by Isaiah Pettingill and keeps Joel Odom's core
+and firmware copyright/license separate. The firmware/cartridge sources
+(`.asm`/`.gpl`) carry a short two-line license pointer instead. **Preserve those
+headers on every existing file, and add one to every new source file**, keeping
+them in sync with `LICENSE.md`. Do not reintroduce "all rights reserved"
+notices in Joel Odom's licensed files — they contradict the license grant.
 
 The license covers this project's own source and the clean-room ROM/GROM rewrite
 under `original-content/system-roms/` only. It does **not** cover Texas
@@ -92,7 +95,7 @@ parallel — check `git status` for a sibling's in-flight work before committing
 
 ## Build / test
 
-- `cargo test --workspace` — all four crates (core, app, asm, gpl); the
+- `cargo test --workspace` — all five crates (core, app, asm, gpl, libretro); the
   emulator core (`-p libre99-core`) is pure `std` with zero third-party deps.
 - `cargo clippy --workspace` — keep this clean.
 - Repo scripts must be `sh` + `cargo` only (no `make`, no `python` on the PC).

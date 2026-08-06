@@ -62,15 +62,17 @@ comments next to the code that encodes each quirk.
 
 ## 2. Code organization
 
-A **Cargo workspace of four crates**. The split makes the core's "zero
-third-party dependencies" rule structural rather than aspirational: only the
-desktop app links windowing/audio/logging crates.
+A **Cargo workspace of five crates**. The split makes the core's "zero
+third-party dependencies" rule structural rather than aspirational: the desktop
+app owns windowing/audio/logging dependencies, while the separate libretro
+adapter owns its C ABI boundary.
 
 ```
 crates/libre99-core/   the emulator (pure std, zero deps, #![forbid(unsafe_code)])
 crates/libre99-app/    desktop frontend (winit + softbuffer + cpal + log/simplelog + toml)
 crates/libre99-asm/    libre99asm — TMS9900 assembler + .ctg packager + disassembler (pure std)
 crates/libre99-gpl/    libre99gpl — GPL assembler/decoder/disassembler + console-GROM build (pure std)
+crates/libre99-libretro/ MIT-licensed libretro adapter (cdylib; unsafe FFI only)
 ```
 
 `libre99-asm` and `libre99-gpl` are both stand-alone tools **and** the build +
@@ -119,6 +121,16 @@ its tests run against.)
 | `screenshot` | The built-in PNG encoder for `Cmd/Ctrl`+`S`. |
 | `debug` | The live CPU-inspector overlay. |
 | `sysinfo` | Fills the core's system-info block with this build's version/date/commit/host at launch. |
+
+### `libre99-libretro`
+
+The libretro adapter is a standalone `cdylib` with no frontend crate
+dependency. It translates the libretro frame/audio/input callbacks into the
+safe `Machine` API, loads `.ctg`/`.bin`/`.dsk` content, discovers firmware in the
+frontend system directory, and wraps machine state with disk-playlist metadata.
+Its source is MIT-licensed by Isaiah Pettingill; it links to the existing
+Joel-Odom-owned core and clean-room firmware without changing their license.
+See [LIBRETRO.md](LIBRETRO.md) for the ABI and install guide.
 
 ### `libre99-asm` modules
 | Module | Responsibility |

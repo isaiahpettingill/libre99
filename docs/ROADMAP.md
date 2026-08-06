@@ -123,8 +123,11 @@ Each item is tagged: **[done]** implemented and merged to `main` ·
   *positional* mapping (host physical key → same TI position, best for games and
   joystick-style control) and *character* mapping (host **logical** key → TI key,
   so a Dvorak or AZERTY typist gets the letters they actually typed). **[done]**
-- Full key/joystick **remapping** from the config file. **[next]**
-- **Gamepad** support (via a frontend crate such as `gilrs`). **[later]**
+- Full key/joystick **remapping** from the desktop config file. **[next]**
+- **Gamepad** support in the desktop app (via a frontend crate such as `gilrs`).
+  **[later]**
+- **Libretro frontend core** — controller, keyboard, mouse, audio, media,
+  custom firmware, disk control, and save states. **[done]**
 - **Paste-to-type**: inject host clipboard text as TI keystrokes. **[later]**
 
 ### 2. Media management (Classic99-grade)

@@ -51,6 +51,11 @@ right, and the firmware does the rest.
   native file-chooser media mounting, save states (auto-save/resume + named
   snapshots), screenshots, pause/frame-advance/fast-forward, and a live CPU
   inspector — the overlays drawn by the app itself, no GUI toolkit.
+- **A libretro core.** Build `libre99-libretro` as a standalone MIT-licensed
+  `cdylib` for RetroArch and other frontends. It supports no-content boot,
+  cartridges, disks and disk swapping, custom firmware from the system folder,
+  keyboard/mouse/controllers, controller-to-TI-key remapping, audio, video, and
+  save states ([guide](docs/LIBRETRO.md)).
 
 ## Screenshots
 
@@ -89,6 +94,9 @@ are files you mount at run time.
 ```bash
 # Boots the bare console to the master title screen.
 cargo run --release -p libre99-app
+
+# Build the RetroArch/libretro core.
+cargo build --release -p libre99-libretro
 ```
 
 A window opens at the master title screen. **Just type** — the keyboard starts
@@ -125,6 +133,7 @@ cargo run --release -p libre99-app -- --system-rom path/to/994aROM.Bin --system-
 |---|---|---|
 | `crates/libre99-core` | The emulator core: every chip, the console bus, save states. Pure `std`, **zero third-party dependencies**, `#![forbid(unsafe_code)]`. | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
 | `crates/libre99-app` | The desktop app: window, audio, input, overlays, media mounting, config, logging. | [docs/USER-GUIDE.md](docs/USER-GUIDE.md) |
+| `crates/libre99-libretro` | MIT-licensed libretro `cdylib`: frontend callbacks, media, firmware discovery, controllers, keyboard/mouse, audio, video, disk control, and save states. | [docs/LIBRETRO.md](docs/LIBRETRO.md) |
 | `crates/libre99-asm` | `libre99asm` — a complete two-pass TMS9900 assembler + `.ctg` cartridge packager + disassembler. | [assembler/ASSEMBLER.md](assembler/ASSEMBLER.md) |
 | `crates/libre99-gpl` | `libre99gpl` — GPL (Graphics Programming Language) assembler/disassembler and the console-GROM build + verification harness. | [original-content/system-roms/grom/README.md](original-content/system-roms/grom/README.md) |
 | `original-content/system-roms` | The clean-room console ROM + GROM rewrite (Libre99): original firmware, differentially verified, booted by default. | [original-content/system-roms/README.md](original-content/system-roms/README.md) |
