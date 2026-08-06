@@ -47,9 +47,36 @@ you use for game content, then load them through the frontend's normal content
 browser. The core copies frontend-provided buffers, so it does not depend on
 those buffers remaining valid after `retro_load_game` returns.
 
+A `.dsk` is a disk image, not a self-launching program. Loading one by itself
+ mounts it as DSK1 and boots the bare console; the console has no generic disk
+ browser or automatic file launcher. Disk software normally needs a cartridge or
+ console firmware program to read the directory and load files.
+
+For cartridge-based disk software in RetroArch:
+
+1. Load the `.ctg` or raw `.bin` cartridge as the core content.
+2. Open **Quick Menu → Disk Control**.
+3. Use **Load New Disk** (the exact label can vary by frontend) to add the
+   `.dsk`, then select its disk index and insert it.
+4. Start the cartridge's disk option or program. The cartridge reads DSK1;
+   there is no separate host-side file browser.
+
+For TI BASIC disk programs, use console ROM/GROM and a disk DSR that you are
+allowed to use. The built-in clean-room firmware does not implement the
+console-resident TI BASIC interpreter. Once authentic firmware is loaded, a
+normal BASIC workflow is:
+
+```text
+OLD DSK1.PROGRAM
+RUN
+```
+
+Replace `PROGRAM` with the filename on the disk. A cartridge may provide its
+own menu or commands instead of `OLD` and `RUN`.
+
 For disk content, the libretro disk-control interface exposes a playlist for
-DSK1. Frontends can eject the current image, add or replace images, and select a
-new image. DSK2 and DSK3 remain available to TI software through the emulated
+DSK1. Frontends can eject the current image, add or replace images, and select
+a new image. DSK2 and DSK3 remain available to TI software through the emulated
 controller but are not represented as separate libretro playlist entries.
 
 Disk writes stay in memory. The core never writes back to the source `.dsk`

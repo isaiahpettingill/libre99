@@ -148,6 +148,26 @@ Nothing is embedded; the console boots bare until you mount media, two ways:
    a **cartridge** change reboots the console (it scans cartridge ROM at
    power-up). The window title always shows what is mounted.
 
+A `.dsk` is a disk image, not a program that the console can launch by itself.
+Mounting only a disk boots the bare console; there is no generic disk browser or
+automatic file launcher. To use cartridge-based disk software, load the
+cartridge first, then insert the disk through the frontend's disk controls. In
+RetroArch, open **Quick Menu → Disk Control**, use **Load New Disk** to add the
+`.dsk`, and insert/select it. Start the cartridge's disk option or program; the
+cartridge reads DSK1.
+
+For TI BASIC disk programs, the authentic console ROM/GROM and disk DSR are
+required because the clean-room firmware does not implement the console-resident
+TI BASIC interpreter. With that firmware loaded, use the normal BASIC commands:
+
+```text
+OLD DSK1.PROGRAM
+RUN
+```
+
+Replace `PROGRAM` with the filename on the disk. Cartridge software may use its
+own menu or commands instead.
+
 ## The keyboard
 
 The TI-99/4A reaches its symbols and edit functions through `SHIFT` and `FCTN`
